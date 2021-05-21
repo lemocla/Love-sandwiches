@@ -1,6 +1,7 @@
 # Import google auth library
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 # The scope lists the APIs that the  program should access in order to run.
 # Constant are in capitals
@@ -53,7 +54,7 @@ def validate_data(values):
     Raises ValueError if strings cannot be converted into int or if there isn't exactly 6 values
     """
     try:
-        #list comprehension
+        # list comprehension
         [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
@@ -76,10 +77,31 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully \n")
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+def calculate_surplus_data(data):
+    """
+    Compare sales with stock and calculate the surplus for each item type
 
+    The surplus is defined as the sales figures substracted from the stock 
+    - positive surplus indicates waste
+    - negative surplus extra made when stock ran out
+    """
+    print("Calculating suprlus data ... \n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1] # slice the final item from the list and return it to the new stock variable
+    pprint(stock_row)
+
+def main():
+    """
+    Run all program functions
+    """ 
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+print("Welcome to Love Sandwiches data automation")
+
+main()
 # python3
 # >>> enter code / not running run.py --> but code entered
 # exit() to exit console
