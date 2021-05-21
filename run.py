@@ -43,11 +43,12 @@ def validate_data(values):
     Inside the try, converts all string values into integers.
     Raises ValueError if strings cannot be converted into int or if there isn't exactly 6 values
     """
-    print(values)
     try:
+        #list comprehension
+        [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
-            f"Exactly 6 values provided, you only provide {len(values)}"
+            f"Exactly 6 values provided, you provided {len(values)}"
             )
     # Here we will except ValueError as e: The ValueError class here contains the details of the error triggered by the code in our  try statement here, 
     # and by using the as keyword, we're assigning that ValueError object to the e variable, which is standard Python shorthand for “error”.
@@ -56,4 +57,6 @@ def validate_data(values):
 
 get_sales_data()
 
-
+# python3
+# >>> enter code / not running run.py --> but code entered
+# exit() to exit console
