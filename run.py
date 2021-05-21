@@ -29,14 +29,20 @@ def get_sales_data():
     """
     get sales figures input from the user
     """
-    print("Enter sales data from the last market.")
-    print("Data should be 6 numbers, separated by commas.")
-    print("Example: 10, 20, 30, 40, 50, 60 \n")
+    while True:
+        print("Enter sales data from the last market.")
+        print("Data should be 6 numbers, separated by commas.")
+        print("Example: 10, 20, 30, 40, 50, 60 \n")
 
-    data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: ")
     
-    sales_data = data_str.split(",")
-    validate_data(sales_data)
+        sales_data = data_str.split(",")
+
+        if validate_data(sales_data):
+            print("Data is valid")
+            break
+
+    return sales_data
 
 def validate_data(values):
     """
@@ -48,14 +54,17 @@ def validate_data(values):
         [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
-            f"Exactly 6 values provided, you provided {len(values)}"
+                f"Exactly 6 values provided, you provided {len(values)}"
             )
     # Here we will except ValueError as e: The ValueError class here contains the details of the error triggered by the code in our  try statement here, 
     # and by using the as keyword, we're assigning that ValueError object to the e variable, which is standard Python shorthand for “error”.
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
 
-get_sales_data()
+    return True
+
+data = get_sales_data()
 
 # python3
 # >>> enter code / not running run.py --> but code entered
